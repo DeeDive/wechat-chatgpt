@@ -33,7 +33,14 @@ async function main() {
       } catch (e) {
         console.error(e);
       }
-    });
+    })
+    .on("friendship", async (friendship) =>{
+      if (friendship.type() === 2) {
+          await friendship.accept();
+      }
+    }
+    };
+                                
   try {
     await bot.start();
   } catch (e) {
