@@ -353,6 +353,7 @@ export class ChatGPTBot {
     const talkerId = room.id + talker.id;
     const gptMessage = await this.getGPTMessage(text, talkerId);
     const result = `${text}\n ------\n ${gptMessage}`;
+    console.log("###==="+result+"===###")
     await this.trySay(room, result);
   }
   async onMessage(message: Message) {
@@ -367,7 +368,7 @@ export class ChatGPTBot {
     }
     if (this.tiggerGPTMessage(rawText, privateChat)) {
       //random pausing
-      console.log('pausing for chatgpt for random [0,30s]...')
+      console.log('pausing for chatgpt for random [0,240s]...')
       let timeInMs = Math.random() * (240000);
       delay(timeInMs);
       const text = this.cleanMessage(rawText, privateChat);
