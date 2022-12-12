@@ -2,6 +2,7 @@ import { ChatGPTAPI, ChatGPTConversation } from "chatgpt";
 import { Message } from "wechaty";
 import { config } from "./config.js";
 import { execa } from "execa";
+import { delay } from "delay";
 import { Cache } from "./cache.js";
 import { ContactInterface, RoomInterface } from "wechaty/impls";
 import {
