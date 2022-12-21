@@ -2,6 +2,7 @@ import { ChatGPTPool } from "./chatgpt.js";
 import { config } from "./config.js";
 import { ContactInterface, RoomInterface } from "wechaty/impls";
 import { Message } from "wechaty";
+import delay from "delay";
 enum MessageType {
   Unknown = 0,
 
@@ -101,6 +102,8 @@ export class ChatGPTBot {
   ): boolean {
     return (
       talker.self() ||
+      talker.name().includes("noreply")|| 
+      talker.name() =="Carbon Monoxide Dimer CO.2" || 
       // TODO: add doc support
       messageType !== MessageType.Text ||
       talker.name() == "微信团队" ||
@@ -110,6 +113,8 @@ export class ChatGPTBot {
       text.includes("收到红包，请在手机上查看") ||
       // Transfer message
       text.includes("收到转账，请在手机上查看") ||
+      // initial greetings
+      text.startsWith("我是") ||
       // 位置消息
       text.includes("/cgi-bin/mmwebwx-bin/webwxgetpubliclinkimg")
     );
@@ -129,9 +134,11 @@ export class ChatGPTBot {
     const talkerId = room.id + talker.id;
     const gptMessage = await this.getGPTMessage(text, talkerId);
     const result = `${text}\n ------\n ${gptMessage}`;
+    console.log("###==="+result+"===###")
     await this.trySay(room, result);
   }
   async onMessage(message: Message) {
+    const maintain = true;
     const talker = message.talker();
     const rawText = message.text();
     const room = message.room();
@@ -141,14 +148,29 @@ export class ChatGPTBot {
       return;
     }
     if (this.tiggerGPTMessage(rawText, privateChat)) {
+      //random pausing
+      console.log('pausing for chatgpt for random [0,240s]...')
+      let timeInMs = Math.random() * (240000);
+      delay(timeInMs);
       const text = this.cleanMessage(rawText, privateChat);
       if (privateChat) {
-        return await this.onPrivateMessage(talker, text);
-      } else {
-        return await this.onGroupMessage(talker, text, room);
+          if (text.startsWith("You have added")) {
+               return await this.trySay(talker,"Hi, it's nice to meet you. I'm Assistant, a large language model trained by OpenAI. I'm here to help answer any questions you may have. Is there anything you'd like to chat about?  为避免访问频繁限流，请尽量在一条信息中包含更多信息；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！");
+          }
+          else  {
+              if(maintain){
+	                return await this.trySay(talker,"抱歉bot维护中，请稍后尝试; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问https://chat.openai.com/chat 自行体验~！ ");
+	             }
+              return await this.onPrivateMessage(talker, text);
+          }
+      }  else {
+          if(maintain){
+	                return await this.trySay(talker,"抱歉bot维护中，请稍后尝试; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问https://chat.openai.com/chat 自行体验~！ ");
+	             }
+          return await this.onGroupMessage(talker, text, room);
       }
-    } else {
-      return;
-    }
+      } else {
+        return;
+      }
   }
 }
