@@ -155,7 +155,7 @@ export class ChatGPTBot {
       const text = this.cleanMessage(rawText, privateChat);
       if (privateChat) {
           if (text.startsWith("You have added")) {
-               return await this.trySay(talker,"Hi, it's nice to meet you. I'm Assistant, a large language model trained by OpenAI. I'm here to help answer any questions you may have. Is there anything you'd like to chat about?  为避免访问频繁限流，请尽量在一条信息中包含更多信息；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！");
+               return await this.trySay(talker,"Hi, it's nice to meet you. I'm Assistant, a large language model trained by OpenAI. I'm here to help answer any questions you may have. Is there anything you'd like to chat about?  为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！");
           }
           else  {
               if(maintain){
