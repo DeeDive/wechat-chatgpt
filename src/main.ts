@@ -46,7 +46,7 @@ async function main() {
           await friendship.accept();
       }
     }
-    };
+    );
                                 
   try {
     await bot.start();
