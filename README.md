@@ -7,6 +7,10 @@
   <a href="https://twitter.com/fuergaosi" target="_blank">
     <img alt="Twitter: fuergaosi" src="https://img.shields.io/twitter/follow/fuergaosi.svg?style=social" />
   </a>
+  </a>
+  <a href="https://discord.gg/8fXNrxwUJH" target="blank">
+    <img src="https://img.shields.io/discord/1058994816446369832?label=Join%20Community&logo=discord&style=flat-square" alt="join discord community of github profile readme generator"/>
+  </a>
 </p>
 
 > Use ChatGPT On Wechat via wechaty  
@@ -16,21 +20,14 @@ English | [中文文档](README_ZH.md)
 
 If you don't have a server or want to experience rapid deployment, you can use Railway to do so, see [Usage with Railway](#usage-with-railway).
 
+### Update Decomber 27, 2022
+Using railway & docker deployment, there may be problems that cannot be solved, we are working on it.
+
 ### Update December 20, 2022
 
 Thanks @transitive-bullshit, The ChatGPT API automates the work.  
 You should use password & username to login, and config [CAPTCHAs](#CAPTCHAS).  
 ⚠️ There may be a problem with the Docker image because I don't have an X86 device and Qume doesn't work.
-
-### Update December 13, 2022
-
-~~Yesterday (2022.12.12), OpenAI upgraded the authentication measures.~~
-
-~~It causes `⚠️ No chatgpt item in pool` when you use this project.~~
-
-~~However, please rest assured that we are actively looking for an effective solution,~~
-
-~~If you have a good solution, feel free to contribute!~~
 
 ## 🌟 Feature
 
@@ -42,7 +39,7 @@ You should use password & username to login, and config [CAPTCHAs](#CAPTCHAS).
 - [x] Publish to Docker.hub
 - [x] Add Railway deploy
 - [x] Auto Reload OpenAI Accounts Pool
-- [ ] Add sendmessage retry for 429/503
+- [X] Add sendmessage retry for 429/503
 
 ## Use with docker in Linux(recommended)
 
@@ -84,8 +81,9 @@ docker logs -f wechat-chatgpt
 ## Install
 
 ```sh
-npm install && poetry install
+npm install
 ```
+> NodeJS Version >= 18.0.0
 
 ## Config
 
@@ -146,9 +144,6 @@ So you should config `NOPECHA_KEY` or `CAPTCHA_TOKEN` in your Environment Variab
 ```sh
 npm run dev
 ```
-
-If you are logging in for the first time, then you need to scan the qrcode.
-
 ## Usage with Railway
 
 [Railway](https://railway.app/) is a deployment platform where you can provision infrastructure, develop with that infrastructure locally, and then deploy to the cloud.This section describes how to quickly deploy a wechat-chatgpt project using Railway.
@@ -165,9 +160,9 @@ After some validation is complete, you can begin the deployment.You will see the
 
 Some environment variables need to be configured:
 
-- **CHAT_GPT_EMAIL** : Your OpenAI Account email, if you have session_token, It's optional.
+- **CHAT_GPT_EMAIL** : Your OpenAI Account email.
 
-- **CHAT_GPT_PASSWORD** : Your OpenAI Account password, *if you have session_token, It's optional*.
+- **CHAT_GPT_PASSWORD** : Your OpenAI Account password.
 
 - **CHAT_GPT_RETRY_TIMES** : The number of times to retry when the OpenAI API returns 429 or 503.
 
@@ -189,17 +184,19 @@ Log in successfully and start sending and receiving messages(This process can ta
 
 Besides, in deployment, you may encounter the following issues:
 
-- **Error: ⚠️ No chatgpt item in pool** : This error means that you have not configured the OpenAI account information correctly. You can solve this problem from the following aspects:1. Check whether the token or openAI account and password are filled in correctly. 2. The token may have expired (experience shows that the expiration time of the token is **24** hours), you can go to the chatGPT official website to re-obtain the token. 3. Redeploy Current Services.Note that the above should be modified on the Variables page in Railway Dashboard.
+- **Error: ⚠️ No chatgpt item in pool** : This error means that you have not configured the OpenAI account information correctly. You can solve this problem from the following aspects:1. Check whether the token or openAI account and password are filled in correctly. 2. Redeploy Current Services.Note that the above should be modified on the Variables page in Railway Dashboard. 3. Please make sure that CloudFlare human authentication is present, if it is, Headless browser may not be able to simulate logging into OpenAI.
 - **After the deployment is complete, the QR code is not generated**.Try **refreshing** the page to see again if the Deploy Logs panel generated a link and QR code.
 - **The generated QR code cannot be scanned**.On the generated QR code, there is a link that can be clicked to scan the QR code.
 - **Message feedback is very slow**.Because Railway's servers are deployed overseas, there is an increase in message feedback latency, but it is still within the acceptance range. If you are time sensitive, you can use your own server deployment.
 
-## Author
+If you are logging in for the first time, then you need to scan the qrcode.
 
-👤 **holegots**
+## ✨ Contributor
 
-- Twitter: [@fuergaosi](https://twitter.com/fuergaosi)
-- GitHub: [@fuergaosi233](https://github.com/fuergaosi233)
+<a href="https://github.com/fuergaosi233/wechat-chatgpt/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fuergaosi233/wechat-chatgpt" />
+</a>
+
 
 ## 🤝 Contributing
 

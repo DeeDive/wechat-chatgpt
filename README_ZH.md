@@ -7,6 +7,9 @@
   <a href="https://twitter.com/fuergaosi" target="_blank">
     <img alt="Twitter: fuergaosi" src="https://img.shields.io/twitter/follow/fuergaosi.svg?style=social" />
   </a>
+  <a href="https://discord.gg/8fXNrxwUJH" target="blank">
+    <img src="https://img.shields.io/discord/1058994816446369832?label=Join%20Community&logo=discord&style=flat-square" alt="join discord community of github profile readme generator"/>
+  </a>
 </p>
 
 > 在微信上迅速接入 ChatGPT，让它成为你最好的助手！  
@@ -16,17 +19,14 @@
 
 如果你没有自己的服务器或者想体验快速部署，可使用 Railway 进行部署，参见 [Railway 部署](#railway-部署)。
 
+### 2022.12.27 更新
+目前, 使用 Docker 或 Railway 部署, 会出现意料之外的问题, 我们正在努力解决。
+
 ### 2022.12.20 更新
 
-感谢 @transitive-bullshit [的工]()作, 使得ChatGPT API可以自动完成这项工作。
+感谢 @transitive-bullshit 的工作, 使得ChatGPT API可以自动完成这项工作。
 现在可以使用密码的用户名来登录, 并配置打码 [CAPTCHAs](#CAPTCHAS) 来使得整个流程全自动化.
 
-### 2022.12.12 更新
-~~昨天（2022.12.12），OpenAI 加入了CloudFlare认证措施。~~
-
-~~这使得本项目在运行是会出现 `⚠️ No chatgpt item in pool` 的错误。~~
-
-~~我们正在积极寻找有效的解决方案，如果你有好的解决方案，欢迎贡献！~~
 
 ## 🌟 功能点
 
@@ -38,7 +38,7 @@
 - [x] 发布到 Docker.hub
 - [x] 通过 Railway 进行部署
 - [x] 实现 OpenAI 账户池的热加载
-- [ ] 当 OpenAI 返回码为 429/503 时自动重试
+- [X] 当 OpenAI 返回码为 429/503 时自动重试
 
 ## 在Linux上通过Docker使用（✅ 推荐）
 
@@ -80,8 +80,9 @@ docker logs -f wechat-chatgpt
 ## 安装
 
 ```sh
-npm install && poetry install
+npm install
 ```
+> 请确认安装的NodeJS版本为18.0.0以上
 
 ## 配置
 
@@ -115,8 +116,8 @@ chatPrivateTiggerKeyword: ""
 
 **设置代理:**
 编辑配置文件 `config.yaml`
-```sh
-export http_proxy=<Your Proxy>
+```yaml
+openAIProxy: <代理地址>
 ```
 
 ### CAPTCHAS
@@ -131,14 +132,6 @@ export http_proxy=<Your Proxy>
     >   - Set the `CAPTCHA_TOKEN` env var to your 2captcha API token
 
 如果你需要实现全自动化, 则需要配置`NOPECHA_KEY`或`CAPTCHA_TOKEN`。
-
-如果您无法使用账号密码登陆您的 OpenAI 账户，或者您的终端网络不支持连接到 OpenAI，那么您可以尝试使用 Session Token，请根据如下指示获取：
-
-1. 前往 <https://chat.openai.com/chat> 并登陆。
-2. 按下 F12 打开开发者工具.
-3. 点击 Application 选项卡 > Cookies.
-   ![image](docs/images/session-token.png)
-4. 复制 \_\_Secure-next-auth.session-token 的值，并且以如下方式配置到您的项目中：
 
 ### 启动项目
 
@@ -164,13 +157,13 @@ npm run dev
 
 您需要配置一些环境变量：
 
-- **CHAT_GPT_EMAIL** ：您的 OpenAI 帐户电子邮件，如果您有 session_token，则可不填。
+- **CHAT_GPT_EMAIL** ：您的 OpenAI 帐户电子邮件。
 
-- **CHAT_GPT_PASSWORD** ：您的 OpenAI 帐户密码，如果您有 session_token，则可不填。
+- **CHAT_GPT_PASSWORD** ：您的 OpenAI 帐户密码。
 
 - **CHAT_GPT_RETRY_TIMES** ：当 OpenAI API 返回 429 或 503 时重试的次数。
 
-- **CHAT_PRIVATE_TRIGGER_KEYWORD** ：如果您希望只有一些关键字才能在私人聊天中触发 chatgpt，则可以设置它。
+- **CHAT_PRIVATE_TRIGGER_KEYWORD** ：如果您希望只有一些关键字才能在私人聊天中触发 ChatGPT，则可以设置它。
 
 点击“部署”按钮，您的服务将立即开始部署。以下界面出现表示部署已经开始：
 
@@ -188,17 +181,16 @@ npm run dev
 
 此外，在部署中，您可能会遇到以下问题：
 
-- **Error: ⚠️ No chatgpt item in pool**：此错误表示验证信息有问题。您可以从以下几个方面解决此问题：1.检查 token 或 openAI 账号和密码是否正确填写。2. token 可能已经过期（经验表明 token 的过期时间为**24**小时），您可以到 chatGPT 官网重新获取 token。3. 重新部署当前服务。请注意，应在铁路仪表板的 **Variables** 页面上修改上述内容。
+- **Error: ⚠️ No chatgpt item in pool**：此错误表示验证信息有问题。您可以从以下几个方面解决此问题：1.检查 token 或 openAI 账号和密码是否正确填写。2. 重新部署当前服务。请注意，应在铁路仪表板的 **Variables** 页面上修改上述内容。 3. 请确认是否出现了CloudFlare人机验证, 如果出现了CloudFlare的人机验证, 则可能导致 Headless 浏览器无法成功模拟登录。
 - **部署完成后，不会生成二维码**。尝试**刷新**页面，再次查看 Deploy Logs 面板是否生成了链接和二维码。
 - **生成的二维码无法扫描**。在生成的二维码上，有一个链接可以点击扫描二维码。
 - **消息反馈缓慢**。由于 Railway 的服务器部署在海外，消息反馈延迟会有所增加，但仍在可接受范围内。如果您对时间敏感，则可以使用自己的服务器部署。
 
-## 作者
+## ✨ Contributor
 
-👤 **holegots**
-
-- Twitter: [@fuergaosi](https://twitter.com/fuergaosi)
-- GitHub: [@fuergaosi233](https://github.com/fuergaosi233)
+<a href="https://github.com/fuergaosi233/wechat-chatgpt/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fuergaosi233/wechat-chatgpt" />
+</a>
 
 ## 🤝 为项目添砖加瓦
 
