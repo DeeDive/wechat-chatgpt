@@ -138,7 +138,7 @@ export class ChatGPTBot {
     await this.trySay(room, result);
   }
   async onMessage(message: Message) {
-    const maintain = true;
+    const maintain = false;
     const talker = message.talker();
     const rawText = message.text();
     const room = message.room();
