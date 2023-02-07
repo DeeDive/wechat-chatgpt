@@ -1,4 +1,5 @@
-import { ChatGPTAPI, ChatGPTAPIBrowser } from "chatgpt";
+import { ChatGPTAPI } from "chatgpt";
+import { v4 as uuidv4 } from "uuid";
 
 import { config } from "./config.js";
 import AsyncRetry from "async-retry";
@@ -43,9 +44,8 @@ export class ChatGPTPool {
     if (chatGPTItem) {
       const account = chatGPTItem.account;
       try {
-        chatGPTItem.chatGpt = new ChatGPTAPIBrowser({
-          ...account,
-          proxyServer: config.openAIProxy,
+        chatGPTItem.chatGpt = new ChatGPTAPI({
+          apiKey: process.env.OPENAI_API_KEY + ""
         });
       } catch (err) {
         //remove this object
@@ -65,17 +65,18 @@ export class ChatGPTPool {
   async startPools() {
     const chatGPTPools = [];
     for (const account of config.chatGPTAccountPool) {
-      const chatGpt = new ChatGPTAPIBrowser({
-        ...account,
-        proxyServer: config.openAIProxy,
+      const chatGpt = new ChatGPTAPI({
+        apiKey: process.env.OPENAI_API_KEY + ""
       });
       try {
-        await AsyncRetry(
-          async () => {
-            await chatGpt.initSession();
-          },
-          { retries: 3 }
-        );
+        // await AsyncRetry(
+        //   async () => {
+        //     await chatGpt.initSession();
+        //   },
+        //   { retries: 3 }
+        // );
+        // const res = await chatGpt.sendMessage('Hello World!')
+        // console.log(`res.text: ${res.text}`)
         chatGPTPools.push({
           chatGpt: chatGpt,
           account: account,
@@ -163,9 +164,11 @@ export class ChatGPTPool {
     try {
       // TODO: Add Retry logic
       const {
-        response,
-        conversationId: newConversationId,
-        messageId: newMessageId,
+        id: newMessageId,
+        text: response,
+        role: Role,
+        parentMessageId: parentMessageId,
+        conversationId: newConversationId = uuidv4()
       } = await conversation.sendMessage(message, {
         conversationId,
         parentMessageId: messageId,
