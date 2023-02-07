@@ -44,6 +44,7 @@ async function main() {
     .on("friendship", async (friendship) =>{
       if (friendship.type() === 2) {
           await friendship.accept();
+	  console.log("Friend +1!");
       }
     }
     );
