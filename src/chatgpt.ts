@@ -12,11 +12,11 @@ import {
 
 const ErrorCode2Message: Record<string, string> = {
   "503":
-    "OpenAI 服务器繁忙，请稍后再试| The OpenAI server is busy, please try again later. 为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！",
+    "OpenAI 服务器繁忙，请稍后再试| The OpenAI server is busy, please try again later. 为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！",
   "429":
-   "OpenAI 服务器繁忙，请稍后再试| The OpenAI server is busy, please try again later. 为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！",
+   "OpenAI 服务器繁忙，请稍后再试| The OpenAI server is busy, please try again later. 为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！",
   "500":
-   "OpenAI 服务器繁忙，请稍后再试| The OpenAI server is busy, please try again later. 为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！",
+   "OpenAI 服务器繁忙，请稍后再试| The OpenAI server is busy, please try again later. 为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！",
   "403":
     "OpenAI 服务器拒绝访问，请稍后再试| The OpenAI server refused to access, please try again later",
   unknown: "未知错误，请看日志 | Error unknown, please see the log",

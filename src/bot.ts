@@ -158,17 +158,17 @@ export class ChatGPTBot {
       const text = this.cleanMessage(rawText, privateChat);
       if (privateChat) {
           if (text.startsWith("You have added")) {
-               return await this.trySay(talker,"Hi, it's nice to meet you. I'm Assistant, a large language model trained by OpenAI. I'm here to help answer any questions you may have. Is there anything you'd like to chat about?  为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！");
+               return await this.trySay(talker,"Hi, it's nice to meet you. I'm Assistant, a large language model trained by OpenAI. I'm here to help answer any questions you may have. Is there anything you'd like to chat about?  为避免访问频繁限流，请尽量在一条消息中包含更多信息量；注意不要讨论敏感话题~（如遇访问限流请在下一个整点回来尝试~i）; 本bot为同学自发建立，通过搜索微信号添加好友的方式会自动通过请求, 初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问 https://chat.openai.com/chat 自行体验~！维护同学也希望能够认识更多的人，如果愿意的话欢迎一直留着bot好友，谢谢！");
           }
           else  {
               if(maintain){
-	                return await this.trySay(talker,"抱歉bot维护中，请稍后尝试; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问https://chat.openai.com/chat 自行体验~！ ");
+	                return await this.trySay(talker,"感谢大家的体验！OpenAI早上对于接口做了更新，bot维护中，不能确定下次上线的时间，期待有机会再和大家见面~ 抱歉bot维护中，请稍后尝试; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问https://chat.openai.com/chat 自行体验~！ 维护同学也希望能够认识更多的人，如果愿意的话欢迎一直留着bot好友，谢谢！");
 	             }
               return await this.onPrivateMessage(talker, text);
           }
       }  else {
           if(maintain){
-	                return await this.trySay(talker,"抱歉bot维护中，请稍后尝试; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问https://chat.openai.com/chat 自行体验~！ ");
+	                return await this.trySay(talker,"感谢大家的体验！OpenAI早上对于接口做了更新，bot维护中，不能确定下次上线的时间，期待有机会再和大家见面~ 抱歉bot维护中，请稍后尝试; 本bot为同学自发建立，初衷是希望更多人能够对于前沿的研究进展有一个感受，有能力的用户欢迎访问https://chat.openai.com/chat 自行体验~！ 维护同学也希望能够认识更多的人，如果愿意的话欢迎一直留着bot好友，谢谢！");
 	             }
           return await this.onGroupMessage(talker, text, room);
       }
